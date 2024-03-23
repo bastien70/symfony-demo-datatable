@@ -64,6 +64,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column(type: Types::JSON)]
     private array $roles = [];
+    
+    public function __toString(): string
+    {
+        return $this->fullName;
+    }
 
     public function getId(): ?int
     {

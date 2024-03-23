@@ -13,10 +13,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\Post;
 use App\Entity\User;
+use App\Form\DataTable\Type\ArticleDataTableType;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use App\Security\PostVoter;
 use Doctrine\ORM\EntityManagerInterface;
+use Kreyu\Bundle\DataTableBundle\DataTableFactoryAwareTrait;
+use Kreyu\Bundle\DataTableBundle\Query\ProxyQueryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\SubmitButton;
@@ -41,6 +44,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted(User::ROLE_ADMIN)]
 final class BlogController extends AbstractController
 {
+    use DataTableFactoryAwareTrait;
+
     /**
      * Lists all Post entities.
      *
@@ -57,10 +62,24 @@ final class BlogController extends AbstractController
     public function index(
         #[CurrentUser] User $user,
         PostRepository $posts,
+        Request $request,
     ): Response {
+
+        $datatablePosts = $posts->createQueryBuilder('p')
+            ->join('p.author', 'author');
         $authorPosts = $posts->findBy(['author' => $user], ['publishedAt' => 'DESC']);
 
-        return $this->render('admin/blog/index.html.twig', ['posts' => $authorPosts]);
+        $dataTable = $this->createDataTable(ArticleDataTableType::class, $datatablePosts);
+        $dataTable->handleRequest($request);
+
+        if ($dataTable->isExporting()) {
+            return $this->file($dataTable->export());
+        }
+
+        return $this->render('admin/blog/index.html.twig', [
+            'posts' => $authorPosts,
+            'datatablePosts' => $dataTable->createView(),
+        ]);
     }
 
     /**

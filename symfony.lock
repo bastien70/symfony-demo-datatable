@@ -101,6 +101,9 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
+    "kreyu/data-table-bundle": {
+        "version": "v0.17.8"
+    },
     "laminas/laminas-code": {
         "version": "4.4.3"
     },
@@ -479,6 +482,9 @@
         "files": [
             "config/routes/ux_live_component.yaml"
         ]
+    },
+    "symfony/ux-turbo": {
+        "version": "v2.16.0"
     },
     "symfony/ux-twig-component": {
         "version": "v2.6.1"

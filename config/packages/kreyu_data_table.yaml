@@ -1,0 +1,25 @@
+# config/packages/kreyu_data_table.yaml
+kreyu_data_table:
+  defaults:
+    personalization:
+      enabled: true
+    pagination:
+      enabled: true
+    exporting:
+      enabled: true
+    sorting:
+      enabled: true
+      persistence_enabled: true
+      # if persistence is enabled and symfony/cache is installed, null otherwise
+      persistence_adapter: kreyu_data_table.sorting.persistence.adapter.cache
+      # if persistence is enabled and symfony/security-bundle is installed, null otherwise
+      persistence_subject_provider: kreyu_data_table.persistence.subject_provider.token_storage
+    filtration:
+      persistence_enabled: true
+      # if persistence is enabled and symfony/cache is installed, null otherwise
+      persistence_adapter: kreyu_data_table.filtration.persistence.adapter.cache
+      # if persistence is enabled and symfony/security-bundle is installed, null otherwise
+      persistence_subject_provider: kreyu_data_table.persistence.subject_provider.token_storage
+      enabled: true
+    themes:
+      - '@KreyuDataTable/themes/bootstrap_5.html.twig'
