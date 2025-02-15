@@ -8,6 +8,8 @@ import 'bootstrap/js/dist/tab';
 import 'bootstrap/js/dist/modal';
 import 'jquery'
 
+console.log('coiucou');
+
 // loads the code syntax highlighting library
 import './js/highlight.js';
 

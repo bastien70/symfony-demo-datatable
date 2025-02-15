@@ -2,8 +2,15 @@ import './styles/admin.scss';
 import 'typeahead.js';
 import Bloodhound from "bloodhound-js";
 import 'bootstrap-tagsinput';
+import 'bootstrap/js/dist/alert';
+import 'bootstrap/js/dist/collapse';
+import 'bootstrap/js/dist/dropdown';
+import 'bootstrap/js/dist/tab';
+import 'bootstrap/js/dist/modal';
+import './app.js';
 
 $(function() {
+    console.log('ici');
     // Bootstrap-tagsinput initialization
     // https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/
     var $input = $('input[data-toggle="tagsinput"]');

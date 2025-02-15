@@ -46,17 +46,6 @@ final class BlogController extends AbstractController
 {
     use DataTableFactoryAwareTrait;
 
-    /**
-     * Lists all Post entities.
-     *
-     * This controller responds to two different routes with the same URL:
-     *   * 'admin_post_index' is the route with a name that follows the same
-     *     structure as the rest of the controllers of this class.
-     *   * 'admin_index' is a nice shortcut to the backend homepage. This allows
-     *     to create simpler links in the templates. Moreover, in the future we
-     *     could move this annotation to any other controller while maintaining
-     *     the route name and therefore, without breaking any existing link.
-     */
     #[Route('/', name: 'admin_index', methods: ['GET'])]
     #[Route('/', name: 'admin_post_index', methods: ['GET'])]
     public function index(
@@ -67,7 +56,6 @@ final class BlogController extends AbstractController
 
         $datatablePosts = $posts->createQueryBuilder('p')
             ->join('p.author', 'author');
-        $authorPosts = $posts->findBy(['author' => $user], ['publishedAt' => 'DESC']);
 
         $dataTable = $this->createDataTable(ArticleDataTableType::class, $datatablePosts);
         $dataTable->handleRequest($request);
@@ -77,7 +65,6 @@ final class BlogController extends AbstractController
         }
 
         return $this->render('admin/blog/index.html.twig', [
-            'posts' => $authorPosts,
             'datatablePosts' => $dataTable->createView(),
         ]);
     }
